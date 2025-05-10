@@ -56,32 +56,33 @@ function JobPost({ darkMode }) {
     const requiredFields = ['jobTitle', 'company', 'location', 'description', 'requirements', 'contactEmail'];
     const newErrors = {};
     
-    // Validate required fields - ensure we only check fields that actually exist in the form
+    // Validate required fields
     requiredFields.forEach(field => {
-      if (!formData[field]?.trim()) {
+      if (field in formData && !formData[field]?.trim()) {
         newErrors[field] = 'This field is required';
       }
     });
     
     // Email validation
-    if (formData.contactEmail?.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.contactEmail)) {
+    if (formData.contactEmail && formData.contactEmail.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.contactEmail)) {
       newErrors.contactEmail = 'Please enter a valid email address';
     }
     
     // Salary validation
-    if (formData.salaryRangeMin && formData.salaryRangeMax) {
+    if ('salaryRangeMin' in formData && 'salaryRangeMax' in formData && formData.salaryRangeMin && formData.salaryRangeMax) {
       if (Number(formData.salaryRangeMin) > Number(formData.salaryRangeMax)) {
         newErrors.salaryRangeMin = 'Minimum salary cannot be greater than maximum';
       }
     }
     
     setErrors(newErrors);
-    
-    const hasErrors = Object.keys(newErrors).length > 0;
+
+    // Only include field names that actually exist in formData
+    const validErrorFields = Object.keys(newErrors).filter(field => field in formData);
+    const hasErrors = validErrorFields.length > 0;
     return {
       isValid: !hasErrors,
-      // Only include field names that actually exist in formData
-      errorFields: Object.keys(newErrors).filter(field => field in formData)
+      errorFields: validErrorFields
     };
   };
   
@@ -111,15 +112,15 @@ function JobPost({ darkMode }) {
     const validation = validateForm();
     
     if (!validation.isValid) {
-      // validation.errorFields is already filtered to include only valid form fields
-      // due to our changes in the validateForm function
-
-      const errorMessage = validation.errorFields.length > 0
-        ? `Please fix errors in these fields: ${validation.errorFields.join(', ')}`
-        : 'Please fix the errors in the form';
+      // Create error message with properly filtered field names
+      let errorMessage = 'Please fix the errors in the form';
       
-      toast.error(errorMessage, {
-        icon: "⚠️"
+      if (validation.errorFields.length > 0) {
+        errorMessage = `Please fix errors in these fields: ${validation.errorFields.join(', ')}`;
+      }
+      
+      toast.error(errorMessage, { 
+        icon: "⚠️" 
       });
       scrollToFirstError(validation.errorFields);
       return;
