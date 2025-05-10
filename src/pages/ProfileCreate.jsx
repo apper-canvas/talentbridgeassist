@@ -611,22 +611,24 @@ function AdditionalInfoForm({ formData, updateFormData, prevStep, submitForm }) 
         <div className="border-2 border-dashed border-surface-300 dark:border-surface-600 rounded-lg p-6 text-center">
           {!fileUploaded ? (
             <>
-              <label htmlFor="resume-upload" className="cursor-pointer block">
-                <div className="text-surface-600 dark:text-surface-400 mb-2">
-                  {React.createElement(getIcon('Upload'), { className: "w-10 h-10 mx-auto mb-2" })}
-                  <p>Drag and drop your resume here or click to browse</p>
-                  <p className="text-sm mt-1">Supported formats: PDF, DOCX, RTF (Max 5MB)</p>
-                </div>
-                <input 
-                  id="resume-upload" 
-                  type="file" 
-                  accept=".pdf,.docx,.rtf"
-                  className="hidden" 
-                  onChange={handleFileUpload}
-                />
-                <button type="button" className="btn btn-outline px-4 py-2 mt-3">
-                  Select File
-                </button>
+              <div className="text-surface-600 dark:text-surface-400 mb-2">
+                {React.createElement(getIcon('Upload'), { className: "w-10 h-10 mx-auto mb-2" })}
+                <p>Drag and drop your resume here or click to browse</p>
+                <p className="text-sm mt-1">Supported formats: PDF, DOCX, RTF (Max 5MB)</p>
+              </div>
+              <input 
+                id="resume-upload" 
+                type="file" 
+                accept=".pdf,.docx,.rtf"
+                className="hidden" 
+                onChange={handleFileUpload}
+              />
+              <label htmlFor="resume-upload">
+                <button 
+                  type="button" 
+                  className="btn btn-outline px-4 py-2 mt-3"
+                  onClick={() => document.getElementById('resume-upload').click()}
+                >Select File</button>
               </label>
             </>
           ) : (
