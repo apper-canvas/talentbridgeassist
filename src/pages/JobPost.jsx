@@ -130,8 +130,15 @@ function JobPost({ darkMode }) {
       return;
     }
 
+          icon: "⚠️"
+        });
+        scrollToFirstError(validErrorFields);
+      } else {
+        toast.error('Please fix the errors in the form', {
     
     setIsSubmitting(true);
+      }
+      return;
     
     try {
       // Simulating API call
