@@ -112,9 +112,7 @@ function Home({ darkMode }) {
                 <button 
                   className="btn btn-secondary px-6 py-3 text-base"
                   onClick={() => {
-                    toast.info("This would create an employer profile in the full app", {
-                      icon: "🏢"
-                    });
+                    navigate('/job/post');
                   }}
                 >
                   <BuildingIcon className="w-5 h-5 mr-2" />
