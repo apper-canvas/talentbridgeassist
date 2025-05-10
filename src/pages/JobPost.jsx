@@ -53,11 +53,9 @@ function JobPost({ darkMode }) {
   };
   
   const validateForm = () => {
-    // Define valid field names based on our form data structure
-    const validFieldNames = Object.keys(formData);
     const requiredFields = ['jobTitle', 'company', 'location', 'description', 'requirements', 'contactEmail'];
     const newErrors = {};
-    
+
     // Validate required fields
     requiredFields.forEach(field => {
       if (!formData[field]?.trim()) {
@@ -82,7 +80,7 @@ function JobPost({ darkMode }) {
     const hasErrors = Object.keys(newErrors).length > 0;
     return {
       isValid: !hasErrors,
-      errorFields: Object.keys(newErrors)
+      errorFields: Object.keys(newErrors).filter(field => Object.keys(formData).includes(field))
     };
   };
   
@@ -112,17 +110,11 @@ function JobPost({ darkMode }) {
     const validation = validateForm();
     
     if (!validation.isValid) {
-      // Get only the valid field names from our form data
-      const formFields = Object.keys(formData);
-      
-      // Filter error fields to only include fields that actually exist in the form
-      const validErrorFields = validation.errorFields.filter(field => {
-        return formFields.includes(field);
-      });
-      
-      // Create error message with only valid field names
-      const errorMessage = validErrorFields.length > 0
-        ? `Please fix errors in these fields: ${validErrorFields.join(', ')}`
+      // validation.errorFields is already filtered to include only valid form fields
+      // due to our changes in the validateForm function
+
+      const errorMessage = validation.errorFields.length > 0
+        ? `Please fix errors in these fields: ${validation.errorFields.join(', ')}`
         : 'Please fix the errors in the form';
       
       toast.error(errorMessage, {
@@ -130,7 +122,7 @@ function JobPost({ darkMode }) {
       });
       scrollToFirstError(validErrorFields);
       return;
-    }
+
     
     setIsSubmitting(true);
     
