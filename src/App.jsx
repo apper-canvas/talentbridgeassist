@@ -8,6 +8,7 @@ import getIcon from './utils/iconUtils';
 // Pages
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import ProfileCreate from './pages/ProfileCreate';
 
 function App() {
   const [darkMode, setDarkMode] = useState(
@@ -75,6 +76,7 @@ function App() {
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<Home darkMode={darkMode} />} />
+            <Route path="/profile/create" element={<ProfileCreate darkMode={darkMode} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import getIcon from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
 
@@ -8,6 +9,8 @@ function Home({ darkMode }) {
   const [activeTab, setActiveTab] = useState('jobSeeker');
   
   // Icon components
+  const navigate = useNavigate();
+  
   const BriefcaseIcon = getIcon('Briefcase');
   const UserIcon = getIcon('User');
   const BuildingIcon = getIcon('Building');
@@ -100,9 +103,7 @@ function Home({ darkMode }) {
                 <button 
                   className="btn btn-primary px-6 py-3 text-base"
                   onClick={() => {
-                    toast.info("This would create a candidate profile in the full app", {
-                      icon: "👤"
-                    });
+                    navigate('/profile/create');
                   }}
                 >
                   <UserIcon className="w-5 h-5 mr-2" />
