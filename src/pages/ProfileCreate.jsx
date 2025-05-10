@@ -276,7 +276,7 @@ function SkillsEducationForm({ formData, updateFormData, nextStep, prevStep }) {
                 className="text-surface-600 dark:text-surface-400 hover:text-red-500 dark:hover:text-red-400"
                 aria-label="Remove skill"
               >
-                {getIcon('X')({ className: "w-4 h-4" })}
+                <getIcon('X') className="w-4 h-4" />
               </button>
             </div>
           ))}
@@ -330,7 +330,7 @@ function SkillsEducationForm({ formData, updateFormData, nextStep, prevStep }) {
                 className="text-surface-600 dark:text-surface-400 hover:text-red-500 dark:hover:text-red-400"
                 aria-label="Remove education"
               >
-                {getIcon('Trash2')({ className: "w-4 h-4" })}
+                <getIcon('Trash2') className="w-4 h-4" />
               </button>
             </div>
           ))}
@@ -533,7 +533,7 @@ function ExperienceForm({ formData, updateFormData, nextStep, prevStep }) {
                   className="text-surface-600 dark:text-surface-400 hover:text-red-500 dark:hover:text-red-400"
                   aria-label="Remove experience"
                 >
-                  {getIcon('Trash2')({ className: "w-4 h-4" })}
+                  <getIcon('Trash2') className="w-4 h-4" />
                 </button>
               </div>
               {exp.description && (
@@ -613,7 +613,7 @@ function AdditionalInfoForm({ formData, updateFormData, prevStep, submitForm }) 
             <>
               <label htmlFor="resume-upload" className="cursor-pointer block">
                 <div className="text-surface-600 dark:text-surface-400 mb-2">
-                  {getIcon('Upload')({ className: "w-10 h-10 mx-auto mb-2" })}
+                  <getIcon('Upload') className="w-10 h-10 mx-auto mb-2" />
                   <p>Drag and drop your resume here or click to browse</p>
                   <p className="text-sm mt-1">Supported formats: PDF, DOCX, RTF (Max 5MB)</p>
                 </div>
@@ -632,7 +632,7 @@ function AdditionalInfoForm({ formData, updateFormData, prevStep, submitForm }) 
           ) : (
             <div className="text-center">
               <div className="flex items-center justify-center gap-2 text-primary">
-                {getIcon('FileText')({ className: "w-6 h-6" })}
+                <getIcon('FileText') className="w-6 h-6" />
                 <span className="font-medium">{formData.resume?.name}</span>
               </div>
               <p className="text-sm text-surface-500 mt-1">
@@ -711,7 +711,7 @@ function AdditionalInfoForm({ formData, updateFormData, prevStep, submitForm }) 
                 className="text-surface-600 dark:text-surface-400 hover:text-red-500 dark:hover:text-red-400"
                 aria-label="Remove language"
               >
-                {getIcon('X')({ className: "w-4 h-4" })}
+                <getIcon('X') className="w-4 h-4" />
               </button>
             </div>
           ))}
