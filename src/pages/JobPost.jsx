@@ -56,14 +56,15 @@ function JobPost({ darkMode }) {
     const newErrors = {};
     const requiredFields = ['jobTitle', 'company', 'location', 'description', 'requirements', 'contactEmail'];
     
+    // Validate required fields
     requiredFields.forEach(field => {
-      if (!formData[field].trim()) {
+      if (!formData[field]?.trim()) {
         newErrors[field] = 'This field is required';
       }
     });
     
     // Email validation
-    if (formData.contactEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.contactEmail)) {
+    if (formData.contactEmail?.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.contactEmail)) {
       newErrors.contactEmail = 'Please enter a valid email address';
     }
     
@@ -75,16 +76,46 @@ function JobPost({ darkMode }) {
     }
     
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    
+    const hasErrors = Object.keys(newErrors).length > 0;
+    return {
+      isValid: !hasErrors,
+      errorFields: Object.keys(newErrors)
+    };
+  };
+  
+  const scrollToFirstError = (errorFields) => {
+    if (errorFields.length === 0) return;
+    
+    // Get the first field with an error
+    const firstErrorField = errorFields[0];
+    const errorElement = document.getElementById(firstErrorField);
+    
+    // If we found the element, scroll to it and focus
+    if (errorElement) {
+      // Scroll the element into view with smooth behavior
+      errorElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+      
+      // Focus the element for keyboard users
+      setTimeout(() => errorElement.focus(), 500);
+    }
   };
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!validateForm()) {
-      toast.error('Please fix the errors in the form', {
-        icon: "⚠️"
+    const validationResult = validateForm();
+    
+    if (!validationResult.isValid) {
+      const errorFieldNames = validationResult.errorFields.join(', ');
+      toast.error(`Please fix errors in these fields: ${errorFieldNames}`, {
+        icon: "⚠️",
+        autoClose: 5000
       });
+      scrollToFirstError(validationResult.errorFields);
       return;
     }
     
