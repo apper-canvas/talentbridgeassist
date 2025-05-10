@@ -107,15 +107,22 @@ function JobPost({ darkMode }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const validationResult = validateForm();
+    const validation = validateForm();
     
-    if (!validationResult.isValid) {
-      const errorFieldNames = validationResult.errorFields.join(', ');
-      toast.error(`Please fix errors in these fields: ${errorFieldNames}`, {
-        icon: "⚠️",
-        autoClose: 5000
+    if (!validation.isValid) {
+      // Filter out any error fields that don't actually exist in the form
+      const validErrorFields = validation.errorFields.filter(field => 
+        Object.keys(formData).includes(field)
+      );
+      
+      const errorMessage = validErrorFields.length > 0 
+        ? `Please fix errors in these fields: ${validErrorFields.join(', ')}`
+        : 'Please fix the errors in the form';
+        
+      toast.error(errorMessage, {
+        icon: "⚠️"
       });
-      scrollToFirstError(validationResult.errorFields);
+      scrollToFirstError(validErrorFields);
       return;
     }
     
