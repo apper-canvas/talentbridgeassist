@@ -126,18 +126,13 @@ function JobPost({ darkMode }) {
       toast.error(errorMessage, {
         icon: "⚠️"
       });
-      scrollToFirstError(validation.errorFields);
+      scrollToFirstError(validErrorFields);
       return;
-    }
-
-          icon: "⚠️"
-        });
-        scrollToFirstError(validErrorFields);
-      } else {
-        toast.error('Please fix the errors in the form', {
-    
-    setIsSubmitting(true);
       }
+    
+    try {
+      setIsSubmitting(true);
+      
       return;
     
     try {
