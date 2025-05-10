@@ -111,13 +111,6 @@ function JobPost({ darkMode }) {
     
     const validation = validateForm();
     
-    if (!validation.isValid) {
-      // Double check to ensure only valid form fields are included in error message
-      const formFields = Object.keys(formData);
-      const validErrorFields = validation.errorFields.filter(field => 
-        formFields.includes(field) && field !== 'contactEmails'
-      );
-      
       let errorMessage = 'Please fix the errors in the form';
       
       if (validErrorFields.length > 0) {
