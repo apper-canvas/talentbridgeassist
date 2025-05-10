@@ -131,11 +131,6 @@ function JobPost({ darkMode }) {
       }
     
     try {
-      setIsSubmitting(true);
-      
-      return;
-    
-    try {
       // Simulating API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       
