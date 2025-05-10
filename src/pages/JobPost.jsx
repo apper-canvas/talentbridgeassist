@@ -55,8 +55,8 @@ function JobPost({ darkMode }) {
   const validateForm = () => {
     const requiredFields = ['jobTitle', 'company', 'location', 'description', 'requirements', 'contactEmail'];
     const newErrors = {};
-
-    // Validate required fields
+    
+    // Validate required fields - ensure we only check fields that actually exist in the form
     requiredFields.forEach(field => {
       if (!formData[field]?.trim()) {
         newErrors[field] = 'This field is required';
@@ -80,7 +80,8 @@ function JobPost({ darkMode }) {
     const hasErrors = Object.keys(newErrors).length > 0;
     return {
       isValid: !hasErrors,
-      errorFields: Object.keys(newErrors).filter(field => Object.keys(formData).includes(field))
+      // Only include field names that actually exist in formData
+      errorFields: Object.keys(newErrors).filter(field => field in formData)
     };
   };
   
