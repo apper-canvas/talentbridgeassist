@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import getIcon from '../utils/iconUtils';
@@ -800,6 +800,7 @@ function AdditionalInfoForm({ formData, updateFormData, prevStep, submitForm }) 
 
 // Main Component
 function ProfileCreate({ darkMode }) {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [profileData, setProfileData] = useState({
     basicInfo: {},
@@ -829,11 +830,15 @@ function ProfileCreate({ darkMode }) {
 
   const submitForm = () => {
     // In a real application, you would submit this data to your API
-    console.log("Profile Data:", profileData);
+    console.log("Profile Data submitted:", profileData);
     
-    toast.success("Profile created successfully!", {
-      icon: "🎉"
+    toast.success("This would create a candidate profile in the full app", {
+      icon: "🎉",
+      autoClose: 3000
     });
+    
+    // Navigate back to home after a short delay
+    setTimeout(() => navigate('/'), 2000);
     
     // For demonstration purposes, we'll just log the data
     // and show a success toast
